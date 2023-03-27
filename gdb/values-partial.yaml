@@ -1,0 +1,8 @@
+### Global Values if any ###
+global:
+  postgres: true
+  secret: true
+  redis: true
+  deployment: false
+  service: false
+

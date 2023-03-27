@@ -1,0 +1,18 @@
+{{ if .Values.global.service }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  labels:
+    run: {{ .Values.service.name }}
+  namespace: {{ .Values.service.namespace }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    run: {{ .Values.service.name }}
+  ports:
+    - port: 8080
+      targetPort: 3003
+      protocol: TCP
+      name: http
+{{ end }}      

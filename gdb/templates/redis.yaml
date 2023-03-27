@@ -1,0 +1,24 @@
+{{ if .Values.global.redis }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redis.name }}
+  namespace: {{ .Values.redis.namespace }}
+spec:
+  selector:
+    matchLabels:
+      run: {{ .Values.redis.name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: {{ .Values.redis.name }}
+    spec:
+      containers:
+        - name: {{ .Values.redis.containers.name }}
+          image: {{ .Values.redis.containers.image }}
+          command: {{ .Values.redis.containers.command }}                 
+          ports:
+            - containerPort: {{ .Values.redis.containers.ports }}
+          volumes: {{ .Values.redis.containers.volumes }}
+{{ end }}          

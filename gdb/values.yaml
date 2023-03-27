@@ -1,0 +1,91 @@
+postgres:
+  name: "gdb-postgres-db"
+  namespace: "${NAMESPACE}"
+  engine: postgres
+  masterUsername: "postgres"
+  masterUserPassword:
+    namespace: "${NAMESPACE}"
+    name: "gdb-postgres-secret"
+    key: password
+  dbSubnetGroupName: default
+  dbInstanceClass: db.t4g.micro
+  allocatedStorage: 20
+  deletionProtection: false
+redis:
+  name: "gdb-redis-db"
+  namespace: "${NAMESPACE}"
+  containers:
+    name: "gdb-redis-db"
+    image: redis:6.2.5
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+        - local_redis_data:/data
+secret:
+  postgres:
+    adminPassword:
+      name: gdb-postgres-secret
+      namespace: "${NAMESPACE}"
+      type: Opaque    
+service:
+  name: govstack-gdb
+  namespace: "${NAMESPACE}"
+  type: ClusterIP
+deployment:
+  name: govstack-gdb
+  namespace: "${NAMESPACE}" 
+  containers:
+    name: govstack-gdb
+    restart: always
+    container_name: gdb
+    image: unctad/license-registry:$GDB_VER
+    ports:
+      - "3003:8080"
+    env:
+      - name: "ENV"
+        value: "LIVE"    
+      - name: "DATABASE_HOST"
+        value: "${POSTGRES_HOST}"
+      - name: "DATABASE_NAME"
+        value: "${GDB_POSTGRES_DB_NAME}"
+      - name: "DATABASE_USERNAME"
+        value: "${GDB_POSTGRES_DB_USER}"
+      - name: "DATABASE_PASSWORD"
+        value: "${GDB_POSTGRES_DB_PASSWORD}"                     
+      - name: "REDIS_HOST"
+        value: "${SERVICE_HOST}"
+      - name: "ALLOWED_HOSTS"
+        value: "gdb.${YOUR_DOMAIN_NAME},gdb,172.19.0.2"        
+      - name: "CORS_ORIGIN_WHITELIST"
+        value: ""
+      - name: "AUTH_SERVICE_TYPE_1"
+        value: "KEYCLOAK" 
+      - name: "AUTH_SERVICE_REALM_1"
+        value: "${SYSTEM_CODE}"
+      - name: "AUTH_SERVICE_BACKEND_URL_1"
+        value: "http://keycloak:8080" 
+      - name: "AUTH_SERVICE_PUBLIC_URL_1"
+        value: "https://login.${YOUR_DOMAIN_NAME}/" 
+      - name: "AUTH_SERVICE_ID_1"
+        value: "0" 
+      - name: "AUTH_SERVICE_NAME_1"
+        value: "${SYSTEM_CODE}"
+      - name: "AUTH_SERVICE_CLIENT_ID_1"
+        value: "${GDB_OAUTH_CLIENT_ID}"
+      - name: "AUTH_SERVICE_CLIENT_SECRET_1"
+        value: "${GDB_OAUTH_CLIENT_SECRET}"
+      - name: "AUTH_SERVICE_CLIENT_SCOPE_1"
+        value: "openid email profile"
+      - name: "TRANSLATION_SERVICE_URL"
+        value: "${TRANSLATION_SERVICE_URL}"
+      - name: "AUTH_SERVICE_CLIENT_CALLBACK"
+        value: "login/callback"
+      - name: "LANGUAGES"
+        value: "${DEFAULT_LANGUAGE}"
+      - name: "DEMAND_AUTHORIZATION_HEADER"
+        value: "true"
+      - name: "UPLOAD_FILE_SIZE_LIMIT"
+        value: "26214400"
+      - name: "APP_TITLE"
+        value: "${SYSTEM_CODE} gdb"                                                                                                                          
