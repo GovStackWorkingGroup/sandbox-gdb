@@ -2,18 +2,18 @@
 apiVersion: rds.services.k8s.aws/v1alpha1
 kind: DBInstance
 metadata:
-  name: {{ .Values.db.name }}
-  namespace: {{ .Values.db.namespace }}
+  name: {{ .Values.postgres.name }}
+  namespace: {{ .Values.postgres.namespace }}
 spec:
-  dbInstanceIdentifier: {{ .Values.db.name }}
-  engine: {{ .Values.db.engine }}
-  masterUsername: {{ .Values.db.masterUsername }}
+  dbInstanceIdentifier: {{ .Values.postgres.name }}
+  engine: {{ .Values.postgres.engine }}
+  masterUsername: {{ .Values.postgres.masterUsername }}
   masterUserPassword:
-    namespace: {{ .Values.db.masterUserPassword.namespace }}
-    name: {{ .Values.db.masterUserPassword.name }}
-    key: {{ .Values.db.masterUserPassword.key }}
-  dbSubnetGroupName: {{ .Values.db.dbSubnetGroupName }}
-  dbInstanceClass: {{ .Values.db.dbInstanceClass }}
-  allocatedStorage: {{ .Values.db.allocatedStorage }}
-  deletionProtection: {{ .Values.db.deletionProtection }}
+    namespace: {{ .Values.postgres.masterUserPassword.namespace }}
+    name: {{ .Values.postgres.masterUserPassword.name }}
+    key: {{ .Values.postgres.masterUserPassword.key }}
+  dbSubnetGroupName: {{ .Values.postgres.dbSubnetGroupName }}
+  dbInstanceClass: {{ .Values.postgres.dbInstanceClass }}
+  allocatedStorage: {{ .Values.postgres.allocatedStorage }}
+  deletionProtection: {{ .Values.postgres.deletionProtection }}
 {{ end }}  
