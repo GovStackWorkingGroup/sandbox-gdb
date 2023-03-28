@@ -19,7 +19,9 @@ spec:
           image: {{ .Values.redis.containers.image }}
           command: {{ .Values.redis.containers.command }}                 
           ports:
-            - containerPort: {{ .Values.redis.containers.ports[0] }}
+            - containerPort: {{- range .Values.redis.containers.ports }}
+            {{.}}{{- end }}
           volumes:
-            - {{ .Values.redis.containers.volumes[0] }}
+            - {{- range .Values.redis.containers.volumes }}
+            {{.}}{{- end }}
 {{ end }}          
