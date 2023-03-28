@@ -18,10 +18,6 @@ redis:
     name: "gdb-redis-db"
     image: redis:6.2.5
     command: redis-server --appendonly yes
-    ports:
-      - "6379:6379"
-    volumes:
-        - local_redis_data:/data
 secret:
   postgres:
     adminPassword:
@@ -40,8 +36,6 @@ deployment:
     restart: always
     container_name: gdb
     image: unctad/license-registry:$GDB_VER
-    ports:
-      - "3003:8080"
     env:
       - name: "ENV"
         value: "LIVE"    
