@@ -16,21 +16,21 @@ jobs:
       - helm/install-helm-client:
           version: v3.2.0
       - aws-cli/setup:
-          role-arn: 'arn:aws:iam::463471358064:role/CircleCIRole'
-          aws-region: AWS_DEFAULT_REGION
+          role-arn: 'arn:aws:iam::${AWS_ACCOUNT_NAME}:role/CircleCIRole'
+          aws-region: ${AWS_DEFAULT_REGION}
           profile-name: CircleCIRole
           role-session-name: CircleSession
           session-duration: '1800' 
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: AWS_CLUSTER_NAME
-          cluster-authentication-role-arn: arn:aws:iam::463471358064:role/CircleCIRole
+          cluster-name: ${AWS_CLUSTER_NAME}
+          cluster-authentication-role-arn: arn:aws:iam::${AWS_ACCOUNT_NAME}:role/CircleCIRole
       - run:
           name: Debug
           command: aws sts get-caller-identity
       - run:
           name: Update kubectl
           command: |
-            aws eks update-kubeconfig --region AWS_DEFAULT_REGION --name AWS_CLUSTER_NAME --role-arn arn:aws:iam::463471358064:role/CircleCIRole         
+            aws eks update-kubeconfig --region ${AWS_DEFAULT_REGION} --name ${AWS_CLUSTER_NAME} --role-arn arn:aws:iam::${AWS_ACCOUNT_NAME}:role/CircleCIRole         
       - run:
           name: Install db and secrets for GDB digital registries BB
           command: |
@@ -40,7 +40,7 @@ jobs:
           command: |
             db_name="gdb-postgres-db"
             redis_name="gdb-redis-db"
-            namespace=AWS_NAMESPACE
+            namespace=${AWS_NAMESPACE}
             export NAMESPACE=$namespace
             export POSTGRES_HOST=$(kubectl get DBInstance $db_name -o jsonpath='{.status.endpoint.address}' -n $namespace)
             export POSTGRES_PORT=$(kubectl get DBInstance $db_name -o jsonpath='{.status.endpoint.port}' -n $namespace)
