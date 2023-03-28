@@ -20,6 +20,13 @@ spec:
           command: {{ .Values.redis.containers.command }}                 
           ports:
             containerPort: "6379:6379"
+          volumeMounts:
+            - containerPath: /data
+              volume:
+                name: local_redis_data
+                subPath: /data
+                readOnly: false
       volumes:
-        - local_redis_data:/data
+        - name: local_redis_data
+          size: "5Gi"            
 {{ end }}          
