@@ -17,7 +17,7 @@ redis:
   containers:
     name: "gdb-redis-db"
     image: redis:6.2.5
-    command: redis-server --appendonly yes
+    command: "redis-server --appendonly yes"
 secret:
   postgres:
     adminPassword:
