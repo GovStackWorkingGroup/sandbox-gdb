@@ -20,6 +20,6 @@ spec:
           command: {{ .Values.redis.containers.command }}                 
           ports:
             containerPort: "6379:6379"
-          volumes:
-            - local_redis_data:/data
+      volumes:
+        - local_redis_data:/data
 {{ end }}          
