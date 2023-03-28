@@ -20,5 +20,6 @@ spec:
           command: {{ .Values.redis.containers.command }}                 
           ports:
             - containerPort: {{ .Values.redis.containers.ports }}
-          volumes: {{ .Values.redis.containers.volumes }}
+          volumes:
+            - {{ .Values.redis.containers.volumes }}
 {{ end }}          
