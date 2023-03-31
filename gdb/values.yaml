@@ -70,7 +70,7 @@ redis:
       - "/redis-master/redis.conf"
     env:
     - name: MASTER
-      value: "true"
+      value: true
     volumeMounts:
       - mountPath: /redis-master-data
         name: data
