@@ -27,7 +27,7 @@ spec:
         {{- end }}
   volumes:
     - name: {{ .Values.redis.volumes.dataName }}
-      emptyDir: {{ .Values.redis.volumes.emptyDir }}
+      emptyDir: {}
     - name: {{ .Values.redis.volumes.configName }}
       configMap:
         name: {{ .Values.redis.volumes.configMapName }}

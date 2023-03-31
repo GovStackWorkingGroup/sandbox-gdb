@@ -78,9 +78,8 @@ redis:
         name: config
   volumes:
     dataName: data
-    emptyDir: {}
     configName: config
-    configMapName: example-redis-config
+    configMapName: govstack-gdb-redis-config
     configMapItems:
       - key: redis-config
         path: redis.conf               
