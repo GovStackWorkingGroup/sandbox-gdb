@@ -16,7 +16,7 @@ spec:
       env:
       {{- range .Values.redis.containers.env }}
       - name: {{ .name }}
-        value: {{ .value }}
+        value: {{ ".value" }}
       {{- end }}
       ports:
         - containerPort: 6379
