@@ -73,7 +73,7 @@ jobs:
             export TRANSLATION_SERVICE_URL=https://translations.test.eregistrations.org 
             helm upgrade --install gdb ./gdb/ -f val.yaml                           
 workflows:
-  Deploy IM to EKS cluster:
+  Deploy digital registries BB to EKS cluster:
     jobs:
       - hold:
           type: approval

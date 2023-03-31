@@ -8,11 +8,11 @@ spec:
   containers:
     - name: {{ .Values.redis.containers.name }}
       image: {{ .Values.redis.containers.image }}
-      command:
-        {{- range .Values.redis.containers.command }}
-        - {{ . }}
-        - {{ . }}
-        {{- end }}
+      #command:
+      #  {{- range .Values.redis.containers.command }}
+      #  - {{ . }}
+      #  - {{ . }}
+      #  {{- end }}
       env:
         {{- range .Values.redis.containers.env }}
         - name: {{ .name }}
