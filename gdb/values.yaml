@@ -69,14 +69,14 @@ redis:
       - redis-server --appendonly yes
       - "/redis-master/redis.conf"
     env:
-    - name: MASTER
-      value: "true"
+      - name: MASTER
+        value: "true"
     cpuLimit: "0.1" 
     volumeMounts:
-    - mountPath: /redis-master-data
-      name: data
-    - mountPath: /redis-master
-      name: config
+      - mountPath: /redis-master-data
+        name: data
+      - mountPath: /redis-master
+        name: config
   volumes:
     dataName: data
     emptyDir: {}
