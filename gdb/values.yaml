@@ -69,8 +69,8 @@ redis:
       - redis-server --appendonly yes
       - "/redis-master/redis.conf"
     env:
-      - name: MASTER
-        value: true
+      - name: "MASTER"
+        value: "true"
     volumeMounts:
       - mountPath: /redis-master-data
         name: data
