@@ -58,7 +58,7 @@ redisConfigMap:
   labels:
     app: postgres
   data:
-    redisConfig: ""          
+    redisConfig: "supervised systemd"          
 redis:
   name: govstack-gdb-redis
   namespace: ${NAMESPACE}
