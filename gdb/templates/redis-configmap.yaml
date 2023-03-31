@@ -1,0 +1,9 @@
+{{ if .Values.global.redis }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.redisConfigMap.name }}
+  namespace: {{ .Values.global.namespace }}
+data:
+  redis-config: {{ .Values.redisConfigMap.data.redisConfig }}
+{{ end }}  

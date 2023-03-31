@@ -1,0 +1,42 @@
+{{ if .Values.global.redis }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.redis.name }}
+spec:
+  containers:
+  - name: {{ .Values.redis.containers.name }}
+    image: {{ .Values.redis.containers.image }}
+    command:
+      {{- range .Values.redis.containers.command }}
+      - {{ . }}
+      - {{ . }}
+      {{- end }}
+    env:
+      {{- range .Values.redis.containers.env }}
+      - name: {{ .name }}
+        value: {{ .value }}
+      {{- end }}
+    ports:
+    - containerPort: 6379
+    resources:
+      limits:
+        cpu: {{- range .Values.redis.containers.cpuLimit }}
+    volumeMounts:
+      {{- range .Values.redis.containers.volumeMounts }}
+      - mountPath: {{ .mountPath }}
+        name: {{ .name }}
+      {{- end }}
+  volumes:
+    - name: {{ .Values.redis.volumes.dataName }}
+      emptyDir: {{ .Values.redis.volumes.emptyDir }}
+    - name: {{ .Values.redis.volumes.configName }}
+      configMap:
+        name: {{ .Values.redis.volumes.configMapName }}
+        items:
+          {{- range .Values.redis.volumes.configMapItems }}
+          - key: {{ .key }}
+            path: {{ .path }}
+          {{- end }}
+{{ end }}            
+

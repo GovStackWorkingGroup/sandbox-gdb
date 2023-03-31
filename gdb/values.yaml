@@ -53,6 +53,12 @@ postgresService:
     port: 5432
     selector:
       app: postgres
+redisConfigMap:
+  name: govstack-gdb-redis-config
+  labels:
+    app: postgres
+  data:
+    redisConfig: ""          
 redis:
   name: govstack-gdb-redis
   namespace: ${NAMESPACE}
@@ -61,6 +67,24 @@ redis:
     image: redis:6.2.5
     command:
       - redis-server --appendonly yes
+      - "/redis-master/redis.conf"
+    env:
+    - name: MASTER
+      value: "true"
+    cpuLimit: "0.1" 
+    volumeMounts:
+    - mountPath: /redis-master-data
+      name: data
+    - mountPath: /redis-master
+      name: config
+  volumes:
+    dataName: data
+    emptyDir: {}
+    configName: config
+    configMapName: example-redis-config
+    configMapItems:
+      - key: redis-config
+        path: redis.conf               
 secret:
   postgres:
     adminPassword:
