@@ -1,42 +1,80 @@
-postgres:
-  name: "gdb-postgres-db"
-  namespace: "${NAMESPACE}"
-  engine: postgres
-  masterUsername: "postgres"
-  masterUserPassword:
-    namespace: "${NAMESPACE}"
-    name: "gdb-postgres-secret"
-    key: password
-  dbSubnetGroupName: default
-  dbInstanceClass: db.t4g.micro
-  allocatedStorage: 20
-  deletionProtection: false
+postgresConfigMap:
+  name: govstack-gdb-postgres-config
+  labels:
+    app: postgres
+  data:
+    POSTGRES_DB: postgresdb
+    POSTGRES_USER: "postgres"
+    POSTGRES_PASSWORD: ${GDB_POSTGRES_ADMIN_SECRET}
+postgresStorage:
+  volName: govstack-gdb-postgres-pv-volume
+  claimName: govstack-gdb-postgres-pv-claim
+  labels:
+    type: local
+    app: postgres
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 1Gi
+    accessMode: ReadWriteMany
+    hostPath:
+      path: "/mnt/data"
+postgresDeployment:
+  name: govstack-gdb-postgres
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: postgres
+    template:
+      metadata:
+        labels:
+          app: postgres
+      spec:
+        containers:
+          - name: govstack-gdb-postgres
+            image: postgres:12
+            imagePullPolicy: "IfNotPresent"
+            containerPort: 5432
+            configMapRef: govstack-gdb-postgres-config
+            volumeMountPath: /var/lib/postgresql/data
+            volumeMountName: postgredb
+            volumeName: postgredb
+            volumeClaimName: govstack-gdb-postgres-pv-claim
+        volumes:
+          - name: postgredb
+            claimName: govstack-gdb-postgres-pv-claim           
+postgresService:
+  name: govstack-gdb-postgres
+  labels:
+    app: postgres
+  spec:
+    type: NodePort
+    port: 5432
+    selector:
+      app: postgres
 redis:
-  name: "gdb-redis-db"
-  namespace: "${NAMESPACE}"
+  name: govstack-gdb-redis
+  namespace: ${NAMESPACE}
   containers:
-    name: "gdb-redis-db"
+    name: govstack-gdb-redis
     image: redis:6.2.5
     command:
       - redis-server --appendonly yes
 secret:
   postgres:
     adminPassword:
-      name: gdb-postgres-secret
-      namespace: "${NAMESPACE}"
-      type: Opaque    
+      name: govstack-gdb-postgres-admin-secret
+      type: Opaque
 service:
   name: govstack-gdb
-  namespace: "${NAMESPACE}"
   type: ClusterIP
 deployment:
   name: govstack-gdb
-  namespace: "${NAMESPACE}" 
   containers:
     name: govstack-gdb
-    restart: always
-    container_name: gdb
-    image: unctad/license-registry:$GDB_VER
+    image: 463471358064.dkr.ecr.eu-central-1.amazonaws.com/${ECR_GDB_REPO_NAME}:gdb
+    imagePullPolicy: "Always"
     env:
       - name: "ENV"
         value: "LIVE"    
@@ -83,4 +121,5 @@ deployment:
       - name: "UPLOAD_FILE_SIZE_LIMIT"
         value: "26214400"
       - name: "APP_TITLE"
-        value: "${SYSTEM_CODE} gdb"                                                                                                                          
+        value: "${SYSTEM_CODE} gdb"
+                                                                                                                 

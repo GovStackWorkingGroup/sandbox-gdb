@@ -32,22 +32,36 @@ jobs:
           command: |
             aws eks update-kubeconfig --region "${AWS_DEFAULT_REGION}" --name "${AWS_CLUSTER_NAME}" --role-arn arn:aws:iam::463471358064:role/CircleCIRole         
       - run:
-          name: Install db and secrets for GDB digital registries BB
+          name: Install secrets for GDB digital registries BB
           command: |
-            helm upgrade --install gdb ./gdb/ -f ./gdb/values-partial.yaml
+            export NAMESPACE="${AWS_NAMESPACE}"
+            cp ./gdb/values-secrets.yaml val.yaml
+            sed -i 's/${NAMESPACE}/'"$NAMESPACE"'/g' val.yaml
+            helm install gdb ./gdb/ -f val.yaml 
+      - run:
+          name: Install postgres and redis for GDB digital registries BB
+          command: |
+            export NAMESPACE="${AWS_NAMESPACE}"
+            cp ./gdb/values-db.yaml val.yaml
+            sed -i 's/${NAMESPACE}/'"$NAMESPACE"'/g' val.yaml
+            export GDB_POSTGRES_ADMIN_SECRET=$(kubectl get secret govstack-gdb-postgres-admin-secret -o jsonpath='{.data.password}' --namespace $NAMESPACE | base64 --decode)
+            helm upgrade --install gdb ./gdb/ -f val.yaml                       
       - run:
           name: Install GDB digital registries BB
           command: |
-            db_name="gdb-postgres-db"
-            redis_name="gdb-redis-db"
-            namespace=${AWS_NAMESPACE}
-            export NAMESPACE=$namespace
-            export POSTGRES_HOST=$(kubectl get DBInstance $db_name -o jsonpath='{.status.endpoint.address}' -n $namespace)
-            export POSTGRES_PORT=$(kubectl get DBInstance $db_name -o jsonpath='{.status.endpoint.port}' -n $namespace)
-            export GDB_POSTGRES_DB_NAME=$db_name
-            export GDB_POSTGRES_DB_USER=$(kubectl get DBInstance $db_name -o jsonpath='{.spec.masterUsername}' -n $namespace)
-            secret_name=$(kubectl get DBInstance $db_name -o jsonpath='{.spec.masterUserPassword.name}' -n $namespace)
-            export GDB_POSTGRES_DB_PASSWORD=$(kubectl get secret $secret_name -o jsonpath='{.data.password}' --namespace $namespace | base64 --decode)
+            export NAMESPACE="${AWS_NAMESPACE}"
+            cp ./gdb/values-full.yaml val.yaml
+            sed -i 's/${NAMESPACE}/'"$NAMESPACE"'/g' val.yaml
+            db_name="govstack-gdb-postgres"
+            redis_name="govstack-gdb-redis"
+            config_name="govstack-gdb-postgres-config"
+            admin_secret="govstack-gdb-postgres-admin-secret"
+            export ECR_GDB_REPO_NAME=${AWS_ECR_GDB_REPO}
+            export POSTGRES_HOST=$(kubectl get service $db_name -o jsonpath='{.spec.clusterIP}' -n $NAMESPACE)
+            export POSTGRES_PORT=$(kubectl get service $db_name -o jsonpath='{.spec.ports[0].port}' -n $NAMESPACE)
+            export GDB_POSTGRES_DB_NAME=$db_name            
+            export GDB_POSTGRES_DB_USER=$(kubectl get configmap $config_name -o jsonpath='{.data.POSTGRES_USER}' -n $NAMESPACE)
+            export GDB_POSTGRES_DB_PASSWORD=$(kubectl get secret $admin_secret -o jsonpath='{.data.password}' --namespace $NAMESPACE | base64 --decode)
             export GDB_VER=RC
             export GDB_OAUTH_CLIENT_ID=gdb-client
             export GDB_OAUTH_CLIENT_SECRET=changeme
@@ -56,9 +70,8 @@ jobs:
             export YOUR_DOMAIN_NAME=localhost
             export TIME_ZONE=Europe/Zurich
             export SERVICE_HOST=$(kubectl get pod $redis_name --template '{{.status.podIP}}')
-            export POSTGRES_HOST=$(kubectl get DBInstance $db_name --template '{{.status.podIP}}')
             export TRANSLATION_SERVICE_URL=https://translations.test.eregistrations.org 
-            helm upgrade --install gdb ./gdb/ -f ./gdb/values.yaml                           
+            helm upgrade --install gdb ./gdb/ -f val.yaml                           
 workflows:
   Deploy IM to EKS cluster:
     jobs:
