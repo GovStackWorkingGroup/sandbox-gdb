@@ -38,5 +38,5 @@ spec:
           - key: {{ .key }}
             path: {{ .path }}
           {{- end }}
-{{ end }}            
+{{ end }}
 
