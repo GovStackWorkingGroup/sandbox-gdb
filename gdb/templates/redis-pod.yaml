@@ -8,11 +8,11 @@ spec:
   containers:
     - name: {{ .Values.redis.containers.name }}
       image: {{ .Values.redis.containers.image }}
-      #command:
-      #  {{- range .Values.redis.containers.command }}
-      #  - {{ . }}
-      #  - {{ . }}
-      #  {{- end }}
+      command:
+        {{- range .Values.redis.containers.command }}
+        - {{ . }}
+        - {{ . }}
+        {{- end }}
       env:
         {{- range .Values.redis.containers.env }}
         - name: {{ .name }}
@@ -20,9 +20,6 @@ spec:
         {{- end }}
       ports:
         - containerPort: 6379
-      resources:
-        limits:
-          cpu: {{- range .Values.redis.containers.cpuLimit }}
       volumeMounts:
         {{- range .Values.redis.containers.volumeMounts }}
         - mountPath: {{ .mountPath }}
@@ -39,5 +36,4 @@ spec:
           - key: {{ .key }}
             path: {{ .path }}
           {{- end }}
-{{ end }}
-
+{{ end }}  

@@ -71,7 +71,6 @@ redis:
     env:
       - name: MASTER
         value: "true"
-    cpuLimit: "0.1" 
     volumeMounts:
       - mountPath: /redis-master-data
         name: data
