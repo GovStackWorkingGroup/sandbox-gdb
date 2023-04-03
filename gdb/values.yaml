@@ -60,7 +60,7 @@ redis:
   namespace: ${NAMESPACE}
   containers:
     name: govstack-gdb-redis
-    image: redis:6.2.5
+    image: redis:5.0.4
     command:
       - redis-server
       - "/redis-master/redis.conf"
