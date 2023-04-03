@@ -5,5 +5,5 @@ metadata:
   name: {{ .Values.redisConfigMap.name }}
   namespace: {{ .Values.global.namespace }}
 data:
-  redis-config: {{ .Values.redisConfigMap.data.redisConfig }}
+  redis-config: ""
 {{ end }}  

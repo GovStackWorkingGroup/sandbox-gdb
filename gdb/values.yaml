@@ -54,11 +54,7 @@ postgresService:
     selector:
       app: postgres
 redisConfigMap:
-  name: govstack-gdb-redis-config
-  labels:
-    app: postgres
-  data:
-    redisConfig: "supervised systemd"          
+  name: govstack-gdb-redis-config         
 redis:
   name: govstack-gdb-redis
   namespace: ${NAMESPACE}
@@ -66,7 +62,7 @@ redis:
     name: govstack-gdb-redis
     image: redis:6.2.5
     command:
-      - redis-server --appendonly yes
+      - redis-server
       - "/redis-master/redis.conf"
     env:
     - name: MASTER
