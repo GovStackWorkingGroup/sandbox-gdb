@@ -110,34 +110,40 @@ spec:
       containers:
         - name: {{ .Values.redis.deployment.spec.temp.spec.containers.name }}
           image: {{ .Values.redis.deployment.spec.temp.spec.containers.image }}
-          command:
-          {{- range .Values.redis.deployment.spec.temp.spec.containers.command }}
-            - {{ . }}
-            - {{ . }}
-          {{- end }}
-          env:
-          {{- range .Values.redis.deployment.spec.temp.spec.containers.env }}
-            - name: {{ .name }}
-              value: {{ ".value" }}
-          {{- end }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
           ports:
             - containerPort: 6379
-          volumeMounts:
-          {{- range .Values.redis.deployment.spec.temp.spec.containers.volumeMounts }}
-            - mountPath: {{ .mountPath }}
-              name: {{ .name }}
-          {{- end }}
-      volumes:
-        - name: {{ .Values.redis.deployment.spec.temp.spec.volumes.dataName }}
-          emptyDir: {}
-        - name: {{ .Values.redis.deployment.spec.temp.spec.volumes.configName }}
-          configMap:
-            name: {{ .Values.redis.deployment.spec.temp.spec.volumes.configMapName }}
-            items:
-            {{- range .Values.redis.deployment.spec.temp.spec.volumes.configMapItems }}
-              - key: {{ .key }}
-                path: {{ .path }}
-            {{- end }}
+{{/*          command:*/}}
+{{/*          {{- range .Values.redis.deployment.spec.temp.spec.containers.command }}*/}}
+{{/*            - {{ . }}*/}}
+{{/*            - {{ . }}*/}}
+{{/*          {{- end }}*/}}
+{{/*          env:*/}}
+{{/*          {{- range .Values.redis.deployment.spec.temp.spec.containers.env }}*/}}
+{{/*            - name: {{ .name }}*/}}
+{{/*              value: {{ ".value" }}*/}}
+{{/*          {{- end }}*/}}
+{{/*          ports:*/}}
+{{/*            - containerPort: 6379*/}}
+{{/*          volumeMounts:*/}}
+{{/*          {{- range .Values.redis.deployment.spec.temp.spec.containers.volumeMounts }}*/}}
+{{/*            - mountPath: {{ .mountPath }}*/}}
+{{/*              name: {{ .name }}*/}}
+{{/*          {{- end }}*/}}
+{{/*      volumes:*/}}
+{{/*        - name: {{ .Values.redis.deployment.spec.temp.spec.volumes.dataName }}*/}}
+{{/*          emptyDir: {}*/}}
+{{/*        - name: {{ .Values.redis.deployment.spec.temp.spec.volumes.configName }}*/}}
+{{/*          configMap:*/}}
+{{/*            name: {{ .Values.redis.deployment.spec.temp.spec.volumes.configMapName }}*/}}
+{{/*            items:*/}}
+{{/*            {{- range .Values.redis.deployment.spec.temp.spec.volumes.configMapItems }}*/}}
+{{/*              - key: {{ .key }}*/}}
+{{/*                path: {{ .path }}*/}}
+{{/*            {{- end }}*/}}
 ---
 apiVersion: v1
 kind: Service
