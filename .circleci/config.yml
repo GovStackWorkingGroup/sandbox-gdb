@@ -76,6 +76,8 @@ jobs:
           name: Install Digital Registries BB
           command: |
             export NAMESPACE="${AWS_NAMESPACE}"
+            export PGDATA_FOLDER="${PGDATA}"
+            export PGDATA=$(echo ${PGDATA_FOLDER//\//\\/})
             export SECRETS_ENABLED="false"
             export GDB_ENABLED="${GDB_ENABLED}"
             export DB_ENABLED="true"
@@ -108,11 +110,12 @@ jobs:
             cp ./digital-registries/values.yaml val.yaml
             sed -i 's/${NAMESPACE}/'"$NAMESPACE"'/g' val.yaml
             sed -i 's/${ENV}/'"$ENV"'/g' val.yaml
-            sed -i 's/${DB_ENABLED}/'"$DB_ENABLED"'/g' val.yaml
+            sed -i 's/${PGDATA}/'"$PGDATA"'/g' val.yaml
+            sed -i 's/${DATABASE_ENABLED}/'"$DB_ENABLED"'/g' val.yaml
             sed -i 's/${SECRETS_ENABLED}/'"$SECRETS_ENABLED"'/g' val.yaml
             sed -i 's/${APPLICATION_ENABLED}/'"$APPLICATION_ENABLED"'/g' val.yaml
             sed -i 's/${GDB_ENABLED}/'"$GDB_ENABLED"'/g' val.yaml
-            sed -i 's/${ECR_GDB_REPO_NAME}/'"$ECR_GDB_REPO_NAME"'/g' val.yaml
+            sed -i 's/${ECR_GDB_REPO}/'"$ECR_GDB_REPO_NAME"'/g' val.yaml
             sed -i 's/${DATABASE_HOST}/'"$DATABASE_HOST"'/g' val.yaml
             sed -i 's/${DATABASE_NAME}/'"$DATABASE_NAME"'/g' val.yaml
             sed -i 's/${DATABASE_USERNAME}/'"$DATABASE_USERNAME"'/g' val.yaml
@@ -136,8 +139,6 @@ jobs:
             sed -i 's/${UPLOAD_FILE_SIZE_LIMIT}/'"$UPLOAD_FILE_SIZE_LIMIT"'/g' val.yaml
             sed -i 's/${APP_TITLE}/'"$APP_TITLE"'/g' val.yaml
             
-            cat val.yaml
-
             helm upgrade --install digital-registries ./digital-registries/ -f val.yaml 
       - run:
           name: Delete temporary values file
