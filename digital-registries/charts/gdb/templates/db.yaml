@@ -110,11 +110,13 @@ spec:
       containers:
         - name: {{ .Values.redis.deployment.spec.temp.spec.containers.name }}
           image: {{ .Values.redis.deployment.spec.temp.spec.containers.image }}
-          command:
-          {{- range .Values.redis.deployment.spec.temp.spec.containers.command }}
-            - {{ . }}
-            - {{ . }}
-          {{- end }}
+          command: [ "/usr/local/bin/redis-server" ]
+          args: [ "/redis-conf/redis.conf" ]
+{{/*          command:*/}}
+{{/*          {{- range .Values.redis.deployment.spec.temp.spec.containers.command }}*/}}
+{{/*            - {{ . }}*/}}
+{{/*            - {{ . }}*/}}
+{{/*          {{- end }}*/}}
           env:
           {{- range .Values.redis.deployment.spec.temp.spec.containers.env }}
             - name: {{ .name }}
