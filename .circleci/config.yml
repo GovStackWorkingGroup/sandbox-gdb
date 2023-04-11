@@ -53,7 +53,7 @@ jobs:
             export DB_ENABLED="true"
             export SECRETS_ENABLED="false"
             export APPLICATION_ENABLED="false"
-            cp ./information-mediator/values.yaml val.yaml
+            cp ./digital-registries/values.yaml val.yaml
             sed -i 's/${NAMESPACE}/'"$NAMESPACE"'/g' val.yaml
             sed -i 's/${PGDATA}/'"$PGDATA"'/g' val.yaml
             sed -i 's/${DB_ENABLED}/'"$DB_ENABLED"'/g' val.yaml
