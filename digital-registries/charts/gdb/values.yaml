@@ -50,27 +50,39 @@ redis:
   configMap:
     name: govstack-gdb-redis-config         
   name: govstack-gdb-redis
-  containers:
+  deployment:
     name: govstack-gdb-redis
-    image: redis:5.0.4
-    command:
-      - redis-server
-      - "/redis-master/redis.conf"
-    env:
-    - name: MASTER
-      value: true
-    volumeMounts:
-      - mountPath: /redis-master-data
-        name: data
-      - mountPath: /redis-master
-        name: config
-  volumes:
-    dataName: data
-    configName: config
-    configMapName: govstack-gdb-redis-config
-    configMapItems:
-      - key: redis-config
-        path: redis.conf
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: redis-gdb
+      temp:
+        metadata:
+          labels:
+            app: redis-gdb
+        spec:
+          containers:
+            name: govstack-gdb-redis
+            image: redis:5.0.4
+            command:
+              - redis-server
+              - "/redis-master/redis.conf"
+            env:
+              - name: MASTER
+                value: true
+            volumeMounts:
+              - mountPath: /redis-master-data
+                name: data
+              - mountPath: /redis-master
+                name: config
+          volumes:
+            dataName: data
+            configName: config
+            configMapName: govstack-gdb-redis-config
+            configMapItems:
+              - key: redis-config
+                path: redis.conf
   service:
     name: govstack-gdb-redis
     labels:
