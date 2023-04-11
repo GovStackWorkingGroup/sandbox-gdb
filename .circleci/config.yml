@@ -85,7 +85,7 @@ jobs:
             export DATABASE_NAME="gdb"           
             export DATABASE_USERNAME="gdb"
             export DATABASE_PASSWORD=$(kubectl get secret govstack-gdb-postgres-admin-secret -o jsonpath='{.data.password}' --namespace $NAMESPACE | base64 --decode)
-            export REDIS_HOST=$(kubectl get service govstack-gdb-redis -o jsonpath='{.status.podIP}' --namespace $NAMESPACE)
+            export REDIS_HOST=$(kubectl get service govstack-gdb-redis -o jsonpath='{.spec.clusterIP}' --namespace $NAMESPACE)
             export ALLOWED_HOSTS="gdb.${YOUR_DOMAIN_NAME},gdb,172.19.0.2"
             export CORS_ORIGIN_WHITELIST=""
             export AUTH_SERVICE_TYPE_1="KEYCLOAK"      
