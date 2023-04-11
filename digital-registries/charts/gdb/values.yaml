@@ -89,7 +89,7 @@ redis:
       app: redis-gdb
     spec:
       type: NodePort
-      port: 5432
+      port: 6379
       selector:
         app: redis-gdb
 secret:
