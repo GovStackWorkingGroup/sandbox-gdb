@@ -65,24 +65,11 @@ redis:
           containers:
             name: govstack-gdb-redis
             image: redis:5.0.4
-            command:
-              - redis-server
-              - "/redis-master/redis.conf"
-            env:
-              - name: MASTER
-                value: true
-            volumeMounts:
-              - mountPath: /redis-master-data
-                name: data
-              - mountPath: /redis-master
-                name: config
-          volumes:
-            dataName: data
-            configName: config
-            configMapName: govstack-gdb-redis-config
-            configMapItems:
-              - key: redis-config
-                path: redis.conf
+            resources:
+              requests:
+                cpu: 100m
+                memory: 100Mi
+            port: 6379
   service:
     name: govstack-gdb-redis
     labels:
