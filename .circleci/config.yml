@@ -80,14 +80,15 @@ jobs:
             export GDB_ENABLED="${GDB_ENABLED}"
             export DB_ENABLED="true"
             export APPLICATION_ENABLED="true"
+            export ENV="live"
             export ECR_GDB_REPO_NAME="463471358064.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com\/${AWS_ECR_REPO_NAME_PREFIX}\/${AWS_ECR_GDB_REPO_NAME}"
             export DATABASE_HOST=$(kubectl get service govstack-gdb-postgres -o jsonpath='{.spec.clusterIP}' -n $NAMESPACE)
             export DATABASE_NAME="gdb"           
             export DATABASE_USERNAME="gdb"
             export DATABASE_PASSWORD=$(kubectl get secret govstack-gdb-postgres-admin-secret -o jsonpath='{.data.password}' --namespace $NAMESPACE | base64 --decode)
             export REDIS_HOST=$(kubectl get service govstack-gdb-redis -o jsonpath='{.spec.clusterIP}' --namespace $NAMESPACE)
-            export ALLOWED_HOSTS="gdb.${YOUR_DOMAIN_NAME},gdb,172.19.0.2"
-            export CORS_ORIGIN_WHITELIST=""
+            export ALLOWED_HOSTS="gdb,172.19.0.2"
+            export CORS_ORIGIN_WHITELIST="localhost"
             export AUTH_SERVICE_TYPE_1="KEYCLOAK"      
             export AUTH_SERVICE_REALM_1="gdb"
             export AUTH_SERVICE_BACKEND_URL_1="http:\/\/keycloak:8080"
@@ -106,6 +107,7 @@ jobs:
            
             cp ./digital-registries/values.yaml val.yaml
             sed -i 's/${NAMESPACE}/'"$NAMESPACE"'/g' val.yaml
+            sed -i 's/${ENV}/'"$ENV"'/g' val.yaml
             sed -i 's/${DB_ENABLED}/'"$DB_ENABLED"'/g' val.yaml
             sed -i 's/${SECRETS_ENABLED}/'"$SECRETS_ENABLED"'/g' val.yaml
             sed -i 's/${APPLICATION_ENABLED}/'"$APPLICATION_ENABLED"'/g' val.yaml
