@@ -135,6 +135,8 @@ jobs:
             sed -i 's/${DEMAND_AUTHORIZATION_HEADER}/'"$DEMAND_AUTHORIZATION_HEADER"'/g' val.yaml
             sed -i 's/${UPLOAD_FILE_SIZE_LIMIT}/'"$UPLOAD_FILE_SIZE_LIMIT"'/g' val.yaml
             sed -i 's/${APP_TITLE}/'"$APP_TITLE"'/g' val.yaml
+            
+            cat val.yaml
 
             helm upgrade --install digital-registries ./digital-registries/ -f val.yaml 
       - run:
