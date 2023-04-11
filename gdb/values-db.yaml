@@ -1,8 +1,0 @@
-### Global Values if any ###
-global:
-  namespace: ${NAMESPACE}
-  postgres: true
-  redis: true
-  secret: true
-  deployment: false
-  service: false
