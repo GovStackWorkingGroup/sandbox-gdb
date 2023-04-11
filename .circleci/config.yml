@@ -36,6 +36,7 @@ jobs:
           command: |
             export NAMESPACE="${AWS_NAMESPACE}"
             export SECRETS_ENABLED="${GENERATE_NEW_SECRETS}"
+            export GDB_ENABLED="${GDB_ENABLED}"
             export DB_ENABLED="false"
             export APPLICATION_ENABLED="false"
             cp ./digital-registries/values.yaml val.yaml
@@ -43,11 +44,13 @@ jobs:
             sed -i 's/${DB_ENABLED}/'"$DB_ENABLED"'/g' val.yaml
             sed -i 's/${SECRETS_ENABLED}/'"$SECRETS_ENABLED"'/g' val.yaml
             sed -i 's/${APPLICATION_ENABLED}/'"$APPLICATION_ENABLED"'/g' val.yaml
+            sed -i 's/${GDB_ENABLED}/'"$GDB_ENABLED"'/g' val.yaml
             helm upgrade --install digital-registries ./digital-registries/ -f val.yaml
       - run:
           name: Install db for Digital Registries BB
           command: |
             export NAMESPACE="${AWS_NAMESPACE}"
+            export GDB_ENABLED="${GDB_ENABLED}"
             export PGDATA_FOLDER="${PGDATA}"
             export PGDATA=$(echo ${PGDATA_FOLDER//\//\\/})
             export DB_ENABLED="true"
@@ -59,6 +62,7 @@ jobs:
             sed -i 's/${DB_ENABLED}/'"$DB_ENABLED"'/g' val.yaml
             sed -i 's/${SECRETS_ENABLED}/'"$SECRETS_ENABLED"'/g' val.yaml
             sed -i 's/${APPLICATION_ENABLED}/'"$APPLICATION_ENABLED"'/g' val.yaml
+            sed -i 's/${GDB_ENABLED}/'"$GDB_ENABLED"'/g' val.yaml
                         
             helm upgrade --install digital-registries ./digital-registries/ -f val.yaml           
       - run:
@@ -72,6 +76,10 @@ jobs:
           name: Install Digital Registries BB
           command: |
             export NAMESPACE="${AWS_NAMESPACE}"
+            export SECRETS_ENABLED="false"
+            export GDB_ENABLED="${GDB_ENABLED}"
+            export DB_ENABLED="true"
+            export APPLICATION_ENABLED="true"
             export ECR_GDB_REPO_NAME="463471358064.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com\/${AWS_ECR_REPO_NAME_PREFIX}\/${AWS_ECR_GDB_REPO_NAME}"
             export DATABASE_HOST=$(kubectl get service govstack-gdb-postgres -o jsonpath='{.spec.clusterIP}' -n $NAMESPACE)
             export DATABASE_NAME="gdb"           
@@ -98,6 +106,10 @@ jobs:
            
             cp ./digital-registries/values.yaml val.yaml
             sed -i 's/${NAMESPACE}/'"$NAMESPACE"'/g' val.yaml
+            sed -i 's/${DB_ENABLED}/'"$DB_ENABLED"'/g' val.yaml
+            sed -i 's/${SECRETS_ENABLED}/'"$SECRETS_ENABLED"'/g' val.yaml
+            sed -i 's/${APPLICATION_ENABLED}/'"$APPLICATION_ENABLED"'/g' val.yaml
+            sed -i 's/${GDB_ENABLED}/'"$GDB_ENABLED"'/g' val.yaml
             sed -i 's/${ECR_GDB_REPO_NAME}/'"$ECR_GDB_REPO_NAME"'/g' val.yaml
             sed -i 's/${DATABASE_HOST}/'"$DATABASE_HOST"'/g' val.yaml
             sed -i 's/${DATABASE_NAME}/'"$DATABASE_NAME"'/g' val.yaml
