@@ -70,7 +70,16 @@ redis:
     configMapName: govstack-gdb-redis-config
     configMapItems:
       - key: redis-config
-        path: redis.conf               
+        path: redis.conf
+  service:
+    name: govstack-gdb-redis
+    labels:
+      app: redis-gdb
+    spec:
+      type: NodePort
+      port: 5432
+      selector:
+        app: redis-gdb
 secret:
   postgres:
     adminPassword:

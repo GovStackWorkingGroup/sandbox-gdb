@@ -93,7 +93,7 @@ data:
   redis-config: ""
 ---
 apiVersion: v1
-kind: Pod
+kind: Deployment
 metadata:
   name: {{ .Values.redis.name }}
   namespace: {{ .Values.global.namespace }}  
@@ -128,5 +128,19 @@ spec:
           {{- range .Values.redis.volumes.configMapItems }}
           - key: {{ .key }}
             path: {{ .path }}
-          {{- end }}        
+          {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.redis.service.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.redis.service.labels.app }}
+spec:
+  type: {{ .Values.redis.service.spec.type }}
+  ports:
+    - port: {{ .Values.redis.service.spec.port }}
+  selector:
+    app: {{ .Values.redis.service.spec.selector.app }}
 {{ end }}
