@@ -92,7 +92,7 @@ metadata:
 data:
   redis-config: ""
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.redis.name }}
