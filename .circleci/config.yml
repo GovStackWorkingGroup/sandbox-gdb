@@ -94,7 +94,7 @@ jobs:
             export AUTH_SERVICE_TYPE_1="KEYCLOAK"      
             export AUTH_SERVICE_REALM_1="gdb"
             export AUTH_SERVICE_BACKEND_URL_1="http:\/\/keycloak:8080"
-            export AUTH_SERVICE_PUBLIC_URL_1="https:\/\/login.${YOUR_DOMAIN_NAME}/"
+            export AUTH_SERVICE_PUBLIC_URL_1="https:\/\/login.gdb"
             export AUTH_SERVICE_ID_1="0"
             export AUTH_SERVICE_NAME_1="gdb-auth"
             export AUTH_SERVICE_CLIENT_ID_1="gdb-client"
