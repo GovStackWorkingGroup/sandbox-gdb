@@ -288,3 +288,6 @@ The Sandbox Digital Registries BB is implemented by running UNCTAD GDB in the Ku
    * GENERATE_NEW_SECRETS - boolean value indicating whether secrets (passwords) should be generated for the GDB in the cluster
    * PGDATA - folder to keep PostgreSQL database data in, e.g. "/var/lib/postgresql/data"
    * POSTGRES_USER - admin user's name for PostgreSQL database, e.g. "postgres"
+
+# Emulator for Digital Regiisty Buliding block
+[DOCUMENTATION](./emulator/docs/main.md)
