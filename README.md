@@ -289,5 +289,5 @@ The Sandbox Digital Registries BB is implemented by running UNCTAD GDB in the Ku
    * PGDATA - folder to keep PostgreSQL database data in, e.g. "/var/lib/postgresql/data"
    * POSTGRES_USER - admin user's name for PostgreSQL database, e.g. "postgres"
 
-# Emulator for Digital Regiisty Buliding block
+# Emulator for Digital Registy Buliding block
 [DOCUMENTATION](./emulator/docs/main.md)
