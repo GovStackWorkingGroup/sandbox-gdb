@@ -22,12 +22,16 @@ spec:
           args:
             - 
               chmod -R 777 {{ .Values.digital_registries_bb_emulator.dbPersist.mountPath }}
-              {{ if .Values.digital_registries_bb_emulator.dbPersist.flushStorageOnInit }}
-              rm -r {{ .Values.digital_registries_bb_emulator.dbPersist.mountPath }}/* || true
-              {{ end }}
+
+              if [ $FLUSH_DB_STORAGE == "true" ]; then
+                rm -r {{ .Values.digital_registries_bb_emulator.dbPersist.mountPath }}/* || true;
+              fi
           volumeMounts:
             - name: {{ .Values.digital_registries_bb_emulator.dbPersist.volumeMountName }}
               mountPath: {{ .Values.digital_registries_bb_emulator.dbPersist.mountPath }}
+          env:
+            - name: FLUSH_DB_STORAGE
+              value: "{{ .Values.digital_registries_bb_emulator.dbPersist.flushStorageOnInit }}"
       containers:
         - name: {{ .Values.digital_registries_bb_emulator.container.name }}
           image: "{{ .Values.digital_registries_bb_emulator.container.image }}:{{ .Values.digital_registries_bb_emulator.container.imageTag }}"
@@ -99,5 +103,6 @@ spec:
       name: http
   selector:
     {{- toYaml .Values.digital_registries_bb_emulator.labels | nindent 4 }}
+
+
     
-     
