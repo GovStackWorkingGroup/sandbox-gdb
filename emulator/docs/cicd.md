@@ -22,5 +22,3 @@ To run follow those steps:
     5. (Optional) If needed to install the emulator in development mode (on restart to reinit the database in initial state) add parameter of type "Boolean", named "emulator-db-flush" and set value to "true"
     6. Then trigger "Emulator Build and Deploy" pipeline
     7. Approve the first CI Job
-
-NOTE: Current state is covering only image BUILD and UPLOAD to ECR.
