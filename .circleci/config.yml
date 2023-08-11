@@ -202,7 +202,7 @@ jobs:
               --set digital_registries_bb_emulator.container.image="463471358064.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_EMULATOR_NAME}" \
               --set digital_registries_bb_emulator.container.imageTag=${IMAGE_VERSION} \
               --set digital_registries_bb_emulator.dbPersist.flushStorageOnInit=${CIRCLECI_EMULATOR_DB_FLUSH} \
-              payment-bb-emulator ./helm --install --create-namespace --namespace ${EMULATOR_NAMESPACE} --dry-run --debug
+              digital-registries-bb-emulator ./helm --install --create-namespace --namespace ${EMULATOR_NAMESPACE} --dry-run --debug
       - run:
           name: Validate deployments
           command: |
