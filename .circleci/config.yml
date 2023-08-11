@@ -201,7 +201,7 @@ jobs:
             helm upgrade \
               --set digital_registries_bb_emulator.container.image="463471358064.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_EMULATOR_NAME}" \
               --set digital_registries_bb_emulator.container.imageTag=${IMAGE_VERSION} \
-              --set digital_registries_bb_emulator.dbPersist.flushStorageOnInit=<< pipeline.parameters.workingdir >> \
+              --set digital_registries_bb_emulator.dbPersist.flushStorageOnInit=<< pipeline.parameters.emulator-db-flush >> \
               digital-registries-bb-emulator ./helm --install --create-namespace --namespace ${EMULATOR_NAMESPACE}
       - run:
           name: Validate deployments
