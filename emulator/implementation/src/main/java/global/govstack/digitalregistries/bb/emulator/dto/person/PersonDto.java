@@ -2,11 +2,17 @@ package global.govstack.digitalregistries.bb.emulator.dto.person;
 
 public class PersonDto {
     private Integer id;
-    private String  foundationalId;
+    private String  personalIdCode;
     private String  firstName;
     private String  lastName;
     private String  email;
     private String  dateOfBirth;
+    private String  region;
+    private String  homeAddress;
+    private String  phoneNumber;
+    private String  occupation;
+    private String  municipality;
+    private String  zipCode;
 
     public Integer getId() {
         return id;
@@ -16,12 +22,12 @@ public class PersonDto {
         this.id = id;
     }
 
-    public String getFoundationalId() {
-        return foundationalId;
+    public String getPersonalIdCode() {
+        return personalIdCode;
     }
 
-    public void setFoundationalId(String foundationalId) {
-        this.foundationalId = foundationalId;
+    public void setPersonalIdCode(String personalIdCode) {
+        this.personalIdCode = personalIdCode;
     }
 
     public String getFirstName() {
@@ -56,4 +62,57 @@ public class PersonDto {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public PersonDto setRegion(String region) {
+        this.region = region;
+        return this;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public PersonDto setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public PersonDto setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public PersonDto setOccupation(String occupation) {
+        this.occupation = occupation;
+        return this;
+    }
+
+    public String getMunicipality() {
+        return municipality;
+    }
+
+    public PersonDto setMunicipality(String municipality) {
+        this.municipality = municipality;
+        return this;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public PersonDto setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+        return this;
+    }
 }
