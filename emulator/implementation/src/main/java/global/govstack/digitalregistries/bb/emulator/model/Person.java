@@ -10,7 +10,7 @@ public class Person {
     private Integer id;
 
     @Column(nullable = false, unique = true)
-    private String foundationalId;
+    private String personalIdCode;
     @Column(nullable = false)
     private String firstName;
 
@@ -23,14 +23,38 @@ public class Person {
     @Column
     private String dateOfBirth;
 
+    @Column
+    private String region;
+
+    @Column
+    private String homeAddress;
+
+    @Column
+    private String phoneNumber;
+
+    @Column
+    private String occupation;
+
+    @Column
+    private String municipality;
+
+    @Column
+    private String zipCode;
+
     public Person() {}
 
-    public Person(String foundationalId, String firstName, String lastName, String email, String dateOfBirth) {
-        this.foundationalId = foundationalId;
+    public Person(String personalIdCode, String firstName, String lastName, String email, String dateOfBirth, String region, String homeAddress, String phoneNumber, String occupation, String municipality, String zipCode) {
+        this.personalIdCode = personalIdCode;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
+        this.region = region;
+        this.homeAddress = homeAddress;
+        this.phoneNumber = phoneNumber;
+        this.occupation = occupation;
+        this.municipality = municipality;
+        this.zipCode = zipCode;
     }
 
     public Integer getId() {
@@ -41,12 +65,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getFoundationalId() {
-        return foundationalId;
+    public String getPersonalIdCode() {
+        return personalIdCode;
     }
 
-    public void setFoundationalId(String foundationalId) {
-        this.foundationalId = foundationalId;
+    public void setPersonalIdCode(String personalIdCode) {
+        this.personalIdCode = personalIdCode;
     }
 
     public String getFirstName() {
@@ -81,4 +105,57 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public Person setRegion(String region) {
+        this.region = region;
+        return this;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public Person setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
+        return this;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Person setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public Person setOccupation(String occupation) {
+        this.occupation = occupation;
+        return this;
+    }
+
+    public String getMunicipality() {
+        return municipality;
+    }
+
+    public Person setMunicipality(String municipality) {
+        this.municipality = municipality;
+        return this;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public Person setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+        return this;
+    }
 }

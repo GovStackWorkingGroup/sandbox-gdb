@@ -63,11 +63,17 @@ public class PersonService {
 
     private Person convertToEntity(PersonCreateDto personDto) {
         return new Person(
-                personDto.getFoundationalId(),
+                personDto.getPersonalIdCode(),
                 personDto.getFirstName(),
                 personDto.getLastName(),
                 personDto.getEmail(),
-                personDto.getDateOfBirth());
+                personDto.getDateOfBirth(),
+                personDto.getRegion(),
+                personDto.getHomeAddress(),
+                personDto.getPhoneNumber(),
+                personDto.getOccupation(),
+                personDto.getMunicipality(),
+                personDto.getZipCode());
     }
 
     private PersonDto convertToDto(Person person) {
