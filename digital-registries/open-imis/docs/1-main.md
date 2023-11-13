@@ -25,6 +25,17 @@ Backend expects communication via Gateway component.
 * Swagger API [documentation](https://dev-mssql.s1.openimis.org/api/api_fhir_r4/docs/swagger/) 
 
 
+## Adapter
+
+GitHub [repository](https://github.com/openimis/openimis-be-govstack_api_py).
+
+[Documentation](https://govstack-global.atlassian.net/l/ce/uc1Eda2m) for the Configurable "Registry" Django Model in openIMIS.
+
+[Compliance Evaluation: openIMIS](https://govstack-global.atlassian.net/wiki/spaces/GH/pages/172818480/Compliance+Evaluation+openIMIS)
+
+
+[Case study - openIMIS](https://govstack-global.atlassian.net/wiki/spaces/GH/pages/172818480/Compliance+Evaluation+openIMIS#Functional-Requirements-Digital-Registries)
+
 ## Docker images
 
 Docker images are organized based on [infra repository](https://github.com/GovStackWorkingGroup/sandbox-infra).
