@@ -34,7 +34,7 @@ spec:
               value: "{{ .Values.digital_registries_bb_emulator.dbPersist.flushStorageOnInit }}"
       containers:
         - name: {{ .Values.digital_registries_bb_emulator.container.name }}
-          image: "{{ .Values.digital_registries_bb_emulator.container.image }}:{{ .Values.digital_registries_bb_emulator.container.imageTag }}"
+          image: "{{ .Values.digital_registries_bb_emulator.container.image }}"
           imagePullPolicy: {{ .Values.digital_registries_bb_emulator.container.imagePullPolicy }}
           ports:
           - containerPort: 8080

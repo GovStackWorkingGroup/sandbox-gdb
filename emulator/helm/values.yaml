@@ -8,8 +8,7 @@ digital_registries_bb_emulator:
       app: "digital-registries-bb-emulator"
   container:
     name: digital-registries-bb-emulator-app
-    image: 463471358064.dkr.ecr.eu-central-1.amazonaws.com/bb/digital-registries/emulator/dev-backend
-    imageTag: 0.0.1
+    image: 463471358064.dkr.ecr.eu-central-1.amazonaws.com/bb/digital-registries/emulator:latest
     imagePullPolicy: "Always"
   profiles: "container"
   dbPersist: 
