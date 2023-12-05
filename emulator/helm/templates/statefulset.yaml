@@ -12,7 +12,7 @@ spec:
       {{- toYaml .Values.digital_registries_bb_emulator.template.labels | nindent 6 }}
   template:
     metadata:
-      labels: 
+      labels:
         {{- toYaml .Values.digital_registries_bb_emulator.template.labels | nindent 8 }}
     spec:
       initContainers:
@@ -20,7 +20,7 @@ spec:
           image: busybox
           command: ["sh", "-c"]
           args:
-            - 
+            -
               chmod -R 777 {{ .Values.digital_registries_bb_emulator.dbPersist.mountPath }}
 
               if [ $FLUSH_DB_STORAGE == "true" ]; then
@@ -57,11 +57,11 @@ spec:
               mountPath: {{ .Values.digital_registries_bb_emulator.dbPersist.mountPath }}
           resources:
             limits:
-              cpu: "1"
-              memory: 2Gi
+              cpu: "2"
+              memory: 1Gi
             requests:
               cpu: "200m"
-              memory: 512Mi
+              memory: 1Gi
   volumeClaimTemplates:
     - metadata:
           name: {{ .Values.digital_registries_bb_emulator.dbPersist.volumeMountName }}
@@ -103,6 +103,3 @@ spec:
       name: http
   selector:
     {{- toYaml .Values.digital_registries_bb_emulator.labels | nindent 4 }}
-
-
-    
