@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   namespace:
     type: string
-    default: payments
+    default: digital-registries-bb-emulator
   playground:
     type: boolean
     default: false
@@ -72,7 +72,7 @@ commands:
                     --namespace << pipeline.parameters.namespace >> \
                     --set digital_registries_bb_emulator.dbPersist.flushStorageOnInit=<< pipeline.parameters.emulator-db-flush >> \
                     --set-string "digital_registries_bb_emulator.container.image=${IMAGE}@${DIGEST}" \
-                    digital-registries-emulator ./emulator/helm
+                    digital-registries-bb-emulator ./emulator/helm
 jobs:
   build:
     docker:
