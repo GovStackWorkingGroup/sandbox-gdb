@@ -2,7 +2,7 @@ deployment:
   name: backend
   containers:
     name: open-imis-backend
-    image: 463471358064.dkr.ecr.eu-central-1.amazonaws.com/open-imis/dev-backend:0.0.9
+    image: 161826879607.dkr.ecr.eu-central-1.amazonaws.com/open-imis/plg-backend:latest
     imagePullPolicy: "Always"
     port: 8000
 

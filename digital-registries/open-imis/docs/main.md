@@ -17,7 +17,9 @@ Custom [Dockerfile](https://github.com/openimis/database_postgresql/blob/main/Do
 
 ## [Backend](https://github.com/openimis/openimis-be_py.git)
 
-Backend expects communication via Gateway component.
+Main repository:  https://github.com/openimis/openimis-be_py
+
+Use dedicated [govstack-testing-setup](https://github.com/openimis/openimis-be_py/tree/govstack-testing-setup) branch.
 
 ### API
 
@@ -36,15 +38,23 @@ GitHub [repository](https://github.com/openimis/openimis-be-govstack_api_py).
 
 [Case study - openIMIS](https://govstack-global.atlassian.net/wiki/spaces/GH/pages/172818480/Compliance+Evaluation+openIMIS#Functional-Requirements-Digital-Registries)
 
-## Docker images
 
-Docker images are organized based on [infra repository](https://github.com/GovStackWorkingGroup/sandbox-infra).
+## Sandbox deployment
+
+1. Create DB docker image and deploy it.
+2. Port-forward DB.
+3. [Up and run backend locally](https://github.com/openimis/openimis-be_py/tree/govstack-testing-setup#developers-setup).
+4. Run migrations `python manage.py migrate`
+5. [Create superuser](https://github.com/openimis/openimis-be_py#to-start-working-in-openimis-as-a-module-developer).
+6. Connect to DB and run [USCT migration](https://github.com/GovStackWorkingGroup/sandbox-usecase-usct-backend/blob/main/docs/packages.md#sql-script). 
+7. Replace [entrypoint.sh](https://github.com/openimis/openimis-be_py/blob/f49e81f62ed2c823bd97e51c50c2dabe4ad3d413/script/entrypoint.sh) with [custom one](custom-entrypoint.sh).
+8. Create a [docker image](https://github.com/openimis/openimis-be_py/blob/develop/Dockerfile) of backend and deploy it.
 
 ## Useful commands
 
-* `helm upgrade --install open-imis ./sandbox-open-imis/ --create-namespace --namespace open-imis`
+* `helm upgrade --install open-imis ./open-imis/ --create-namespace --namespace open-imis`
 
-* `helm install open-imis ./sandbox-open-imis/ --create-namespace --namespace open-imis`
+* `helm install open-imis ./open-imis/ --create-namespace --namespace open-imis`
 
 * `helm uninstall open-imis --namespace open-imis`
 
