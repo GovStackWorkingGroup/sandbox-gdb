@@ -42,13 +42,11 @@ GitHub [repository](https://github.com/openimis/openimis-be-govstack_api_py).
 ## Sandbox deployment
 
 1. Create DB docker image and deploy it.
-2. Port-forward DB.
-3. [Up and run backend locally](https://github.com/openimis/openimis-be_py/tree/govstack-testing-setup#developers-setup).
-4. Run migrations `python manage.py migrate`
-5. [Create superuser](https://github.com/openimis/openimis-be_py#to-start-working-in-openimis-as-a-module-developer).
-6. Connect to DB and run [USCT migration](https://github.com/GovStackWorkingGroup/sandbox-usecase-usct-backend/blob/main/docs/packages.md#sql-script). 
-7. Replace [entrypoint.sh](https://github.com/openimis/openimis-be_py/blob/f49e81f62ed2c823bd97e51c50c2dabe4ad3d413/script/entrypoint.sh) with [custom one](custom-entrypoint.sh).
-8. Create a [docker image](https://github.com/openimis/openimis-be_py/blob/develop/Dockerfile) of backend and deploy it.
+2. Create a [docker image](https://github.com/openimis/openimis-be_py/blob/develop/Dockerfile) of backend and [deploy](../charts) it.
+3. Execute next commands in the backend pod:
+* run migrations `python manage.py migrate`
+* [Create superuser](https://github.com/openimis/openimis-be_py#to-start-working-in-openimis-as-a-module-developer). Username: admin, password: govstack
+4. Connect to DB and run [USCT migration](https://github.com/GovStackWorkingGroup/sandbox-usecase-usct-backend/blob/main/docs/packages.md#sql-script).
 
 ## Useful commands
 
@@ -57,6 +55,7 @@ GitHub [repository](https://github.com/openimis/openimis-be-govstack_api_py).
 * `helm install open-imis ./open-imis/ --create-namespace --namespace open-imis`
 
 * `helm uninstall open-imis --namespace open-imis`
+* `kubectl delete namespace open-imis`
 
 
 ### X-Road connection 
